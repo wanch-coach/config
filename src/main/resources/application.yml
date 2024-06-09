@@ -7,6 +7,30 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/wanch-coach/config-file.git
+          uri: git@github.com:wanch-coach/config-file.git
           default-label: main
           search-paths: wanch-coach
+          ignore-local-ssh-settings: true
+          private-key: |
+            -----BEGIN EC PRIVATE KEY-----
+            MHcCAQEEIEUJ5LrM0+UAwLHUbp5twOt9i907fDU2u/jQU5zZQwxvoAoGCCqGSM49
+            AwEHoUQDQgAE/ovAQ+qpdkp1Qz/CVBL2UuNgQtRMWpC1xjkPoL+ZW332M/a5xb1N
+            l9YLcHbZGtnkV5SaDNGHbhKL7yaKGFBL/w==
+            -----END EC PRIVATE KEY-----
+          host-key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+          host-key-algorithm: ecdsa-sha2-nistp256
+        encrypt:
+          enabled: false
+
+# actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+
+encrypt:
+  key:
