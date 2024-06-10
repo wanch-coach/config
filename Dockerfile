@@ -1,15 +1,14 @@
-FROM openjdk:17-jdk
+# FROM docker
+# COPY --from=docker/buildx-bin:latest /buildx /usr/libexec/docker/cli-plugins/docker-buildx
 
-ARG JAR_FILE=./build/libs/wanchcoach-0.0.1-SNAPSHOT.jar
+# 서버를 구동시킬 자바를 받아옵니다.
+FROM azul/zulu-openjdk:17-latest as build
 
-ADD ${JAR_FILE} wanchcoach.jar
+# `JAR_FILE` 이라는 이름으로 build 한 jar 파일을 지정합니다.
+ARG JAR_FILE=./build/libs/*.jar
 
-EXPOSE 8888
+# 지정한 jar 파일을 app.jar 라는 이름으로 Docker Container에 추가합니다.
+ADD ${JAR_FILE} app.jar
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/wanchcoach.jar"]
-
-
-# FROM openjdk:17-jdk
-# ARG JAR_FILE=build/libs/test-0.0.1-SNAPSHOT.jar
-# ADD ${JAR_FILE} test.jar
-# ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/test.jar"]
+# app.jar 파일을 실행합니다.
+ENTRYPOINT ["java","-Duser.timezone=Asia/Seoul", "-jar","/app.jar"]
